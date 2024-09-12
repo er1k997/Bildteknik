@@ -11,8 +11,13 @@ for i = 1:numel(imageFiles)
 end
 
 % Använd fstack-funktionen för att skapa en all-in-focus bild
-[edofimg, fmap, logresponse] = fstack(img);
+%[edofimg, fmap, logresponse] = fstack(img);
 
-imshow(edofimg);
+%imshow(edofimg);
 %imshow(fmap);
 %imshow(logresponse);
+
+
+%[edofimg, fmap, logresponse] = AIL(img);
+[edofimg, fmap, logresponse] = AIG(img);
+imshow(edofimg);
