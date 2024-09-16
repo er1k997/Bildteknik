@@ -1,4 +1,4 @@
-folder = 'images-card';
+folder = 'DanielBilder';
 imageFiles = dir(fullfile(folder, '*.jpg'));
 
 % Förbered en cell-array för att lagra bilderna
@@ -19,5 +19,5 @@ end
 
 
 %[edofimg, fmap, logresponse] = AIL(img);
-[edofimg, fmap, logresponse] = AIG(img);
-imshow(edofimg);
+reslut= own_AIG(img);
+imshow(reslut);
