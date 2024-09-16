@@ -19,5 +19,11 @@ end
 
 
 %[edofimg, fmap, logresponse] = AIL(img);
-reslut= own_AIG(img);
-imshow(reslut);
+result= own_AIG(img);
+imshow(result);
+score_piqe=piqe(result);
+score_br = brisque(result);
+score_niqe = niqe(result);
+disp("Piqe: "+score_piqe);
+disp("Brisque: "+score_br);
+disp("Niqe: "+score_niqe);
