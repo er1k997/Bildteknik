@@ -18,6 +18,13 @@ result= own_LPyramid(img);
 figure;
 imshow(result);
 title('Laplace Pyramid');
+
+score_piqe=piqe(result);
+score_br = brisque(result);
+score_niqe = niqe(result);
+disp("Piqe: "+score_piqe);
+disp("Brisque: "+score_br);
+disp("Niqe: "+score_niqe);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%Grunden %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 
 % %Utvärdera AIL

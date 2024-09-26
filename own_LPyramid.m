@@ -15,25 +15,30 @@ colorimg = (channels == 3);
 % Parameters for Gaussian filtering
 blendsize = 9;
 blendstd = 10;   
+% Normalisera alla bilder om det behövs
+% avg1 = mean(first_img(:));
+% for i = 2:length(img)
+%     avgcur = mean(img{i}(:));
+%     img{i} = img{i} + ceil(avg1 - avgcur);  % Justera ljusstyrkan
+% end
 
 % Initialize variables
 pyramids = cell(1, length(img));
 num_levels=5;
 % Process each image
 for ii = 1:length(img)
-    current_img = img{ii};
+    
+    
+     current_img = img{ii};
+       
+        % Omvandla till gråskala om du vill jobba med svartvita bilder
+        if ~colorimg
+            current_img = rgb2gray(current_img);  % Konvertera om det är färg
+        end
 
-    % Convert to grayscale if necessary
-
-%     avg1 = mean(first_img(:));
-%     for i = 2:length(img)
-%         avgcur = mean(img{i}(:));
-%         img{i} = img{i} + ceil(avg1 - avgcur);  
-%     end
     pyramids{ii} = buildLaplacianPyramid(current_img, num_levels); 
 
-    % Compute gradients
-    
+  
 end
 %%print the different levels in the pyramid
 % for img_idx = 1:length(pyramids)
@@ -44,16 +49,14 @@ end
 %     end
 % end
 
-%mask = zeros(rows, cols);
-
-for level = 1:num_levels
-    [rows2, cols2, channels2] = size(pyramids{1}{level});
-    max_laplace_response = zeros(rows2, cols2, channels2);
-    %Stores the index of the image with the maximum gradient magnitude at each pixel.
-    fmap = ones(rows2, cols2, channels2,'single');
-    %Will store the final focused image.
-    final_img = zeros(rows2, cols2, channels2, 'like', pyramids{1}{level});
-    
+pyramid_final = cell(1, length(num_levels));
+for level = 1:num_levels-1
+     % Variables 
+        [rows2, cols2, chennel2] = size(pyramids{1}{level});
+        max_laplace_response = zeros(rows2, cols2, chennel2, 'uint8'); 
+        fmap = ones(rows2, cols2, chennel2, 'single');  
+        final_img = zeros(rows2, cols2, chennel2, 'uint8');
+  
     for ii = 1:length(img)
         current_laplace = pyramids{ii}{level};
         % Find maximum Laplacian response for each pixel
@@ -66,20 +69,26 @@ for level = 1:num_levels
     for ii = 1:length(img)
         current_laplace = pyramids{ii}{level};
         mask = fmap == ii;
-        current_laplace = double(current_laplace);
-        final_img = double(final_img);
-        mask = double(mask);
+         mask_uint8 = uint8(mask);
+        final_img = final_img + current_laplace .*mask_uint8;
         
-        if colorimg
-            final_img(:,:,1) = final_img(:,:,1) + current_laplace(:,:,1) .* mask(:,:,1);
-            final_img(:,:,2) = final_img(:,:,2) + current_laplace(:,:,2) .* mask(:,:,2);
-            final_img(:,:,3) = final_img(:,:,3) + current_laplace(:,:,3) .* mask(:,:,3);
-        else
-            final_img = final_img + current_laplace .* mask;
-        end
+        
     end
+    
+
+    pyramid_final{level}=final_img;
+ 
 end
 
-final_img = reconstructFromLaplacianPyramid(pyramids, final_img, num_levels);
+pyramid_final{num_levels}=pyramids{1}{num_levels};
+%  for level = 1:length(pyramid_final) 
+%     figure;
+%     imshow(pyramid_final{level});
+%     title([ ' Laplacian Level ' num2str(level)]);
+% 
+% end
 
+
+
+final_img = reconstructFromLaplacianPyramid(pyramid_final, num_levels);
 end

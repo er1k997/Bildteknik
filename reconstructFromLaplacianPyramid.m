@@ -1,20 +1,17 @@
-function img = reconstructFromLaplacianPyramid(pyramids, combined_pyramid, num_levels)
-
-   %img = combined_pyramid{num_levels};
+function img = reconstructFromLaplacianPyramid(combined_pyramid, num_levels)
+      
+    % Start with the finest level of the pyramid (may be grayscale)
+    img = combined_pyramid{num_levels};
     
     % Stegvis uppsampla och lägg till pyramiderna för att rekonstruera
     for level = num_levels-1:-1:1
-        % Hämta storleken på den nuvarande Laplacian-nivån
-        %[rows, cols, ~] = size(combined_pyramid{level});
-        
-        % Upsampla nuvarande bild till samma storlek som nästa pyramidnivå
-        upsampled_img = imresize(combined_pyramid(level-1), size(combined_pyramid(level))); 
-        
-        % Lägg till den nuvarande Laplacian-nivån
+        % Get the size of the current level
+        [row, column, ~] = size(combined_pyramid{level});
+        % Upsample current image to the size of the current level
+        upsampled_img = imresize(img, [row, column]);
+
+        % Add the upsampled image to the current Laplacian level
         img = combined_pyramid{level} + upsampled_img;
+      
     end
- 
-
-
 end
-
