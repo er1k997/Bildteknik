@@ -13,8 +13,19 @@ for i = 1:numel(imageFiles)
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%Testa laplace pyramid%%%%%%%%%%%%%%%%%%%%%%%
-result= own_LPyramid(img);
+% result= own_LPyramid(img);
+% 
+% figure;
+% imshow(result);
+% 
+% score_piqe_log=piqe(result);
+% score_br_log = brisque(result);
+% score_niqe_log = niqe(result);
+% disp("Piqe: "+score_piqe_log);
+% disp("Brisque: "+score_br_log);
+% disp("Niqe: "+score_niqe_log);
 
+<<<<<<< Updated upstream:Test.m
 figure;
 imshow(result);
 title('Laplace Pyramid');
@@ -26,6 +37,9 @@ disp("Piqe: "+score_piqe);
 disp("Brisque: "+score_br);
 disp("Niqe: "+score_niqe);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%Grunden %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+=======
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grunden %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+>>>>>>> Stashed changes:Test.asv
 % 
 % %Utvärdera AIL
 % [ailimg, fmap_ail, logresponse_ail] = AIL(img);
@@ -68,7 +82,7 @@ disp("Niqe: "+score_niqe);
 % result= own_AIG(img);
 % figure;
 % imshow(result);
-% title('own AIG');
+% 
 % score_piqe=piqe(result);
 % score_br = brisque(result);
 % score_niqe = niqe(result);
@@ -103,41 +117,28 @@ disp("Niqe: "+score_niqe);
 % % Visa det skärpta resultatet
 % figure;
 % imshow(edofimg);
-% title('All-in-focus image (fstack)');
-% 
-% %imshow(fmap);
-% %imshow(logresponse);
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % % Version1 av funktionen - Laplace
-% 
-% % [edofimgLaplace, fmapLaplace, laplaceResponse] = fstack_laplace(img);
-% % 
-% % % Visa det skärpta resultatet
-% % figure;
-% % imshow(edofimgLaplace);
-% % title('fstack_laplace');
-% 
+
+
+%imshow(fmap);
+%imshow(logresponse);
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Min egna funktion - Laplace
+[resultImage, depthMap] = own_Laplace(img);
+
+% Visa resultatbilden och djupkartan
+figure;
+%subplot(1,2,1); 
+imshow(resultImage); 
+
+%subplot(1,2,2); imagesc(depthMap); colorbar; title('Depth Map');
 % 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % Min egen funktion - Laplace
-% [resultImage, depthMap] = own_Laplace(img);
-% 
-% % Visa resultatbilden och djupkartan
-% figure;
-% %subplot(1,2,1); 
-% imshow(resultImage); title('Own Laplace');
-% %subplot(1,2,2); imagesc(depthMap); colorbar; title('Depth Map');
-% 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % Laplace Pyramid
+% Laplace Pyramid
 % totalFocusImage = laplacianPyramidFocus(img);
 % 
 % figure;
 % imshow(totalFocusImage);  % Visa totalfokusbilden
 % title('Laplacian Pyramid');
-% 
-% 
-% 
 % 
 % %%%%%%%%% Samtliga fokus mätvärden %%%%%%%%%%%%%%%%%%%%%
 % 
@@ -149,16 +150,6 @@ disp("Niqe: "+score_niqe);
 % disp("Piqe: "+score_piqe);
 % disp("Brisque: "+score_br);
 % disp("Niqe: "+score_niqe);
-% 
-% 
-% % % Mät - Laplace
-% % [edofimg] = fstack_laplace(img);
-% % score_piqe_2=piqe(edofimg);
-% % score_br_2 = brisque(edofimg);
-% % score_niqe_2 = niqe(edofimg);
-% % disp("Piqe: "+score_piqe_2);
-% % disp("Brisque: "+score_br_2);
-% % disp("Niqe: "+score_niqe_2);
 % 
 % 
 % % Mät - Egna Laplace
